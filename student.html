@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management API</title>
+</head>
+<body>
+
+    <h1>Student Management API</h1>
+    <p>Welcome to the Student Management API!</p>
+
+    <form id="searchForm">
+        <input
+            type="text"
+            id="student_name"
+            placeholder="Student name"
+            required
+        >
+        <button type="submit">Search</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("searchForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("student_name").value;
+
+            const response = await fetch(
+                `/student-search?student_name=${encodeURIComponent(name)}`
+            );
+
+            const result = document.getElementById("result");
+
+            if (response.ok) {
+                const student = await response.json();
+
+                result.innerHTML = `
+                    Name: ${student.name}<br>
+                    Age: ${student.age}<br>
+                    Course: ${student.course}
+                `;
+            } else {
+                const error = await response.json();
+                result.textContent = error.detail;
+            }
+        });
+    </script>
+
+</body>
+</html>
