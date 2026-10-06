@@ -1,3 +1,8 @@
 /__pycache__*
 /.vscode
-/venv
+/venvflask/
+.venv/
+venv/
+__pycache__/
+*.pyc
+flask/
